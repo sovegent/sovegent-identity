@@ -29,7 +29,7 @@ import {
   createAttestation,
   verifyAttestation,
   notarizeDocument,
-  verifySignature,
+  verifyNotarization as verifyNotarizationCore,
   type SignerConfig,
   type AttestationInput,
   type NotarizationInput,
@@ -66,6 +66,18 @@ export class LiberProof {
   /** Verify an attestation against a public key. */
   verify(attestation: Attestation, publicKey: string): VerificationResult {
     return verifyAttestation(attestation, publicKey);
+  }
+
+  /**
+   * Verify a notarization record against a public key.
+   * Pass `originalData` to also confirm the document bytes match the recorded hash.
+   */
+  verifyNotarization(
+    record: NotarizationRecord,
+    publicKey: string,
+    originalData?: Uint8Array
+  ): VerificationResult {
+    return verifyNotarizationCore(record, publicKey, originalData);
   }
 
   /**

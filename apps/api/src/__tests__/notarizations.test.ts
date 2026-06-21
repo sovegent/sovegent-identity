@@ -117,9 +117,12 @@ describe("POST /notarizations/:id/anchor", () => {
   it("returns 409 if already anchored", async () => {
     const { body: created } = await authedPost("/notarizations", validPayload);
     const id = created["id"] as string;
-    const anchorPayload = { chain: "ethereum", txHash: "0xabc123" };
+    // txHash must satisfy the route's min(10) validation, else the first anchor
+    // 400s and the row is never anchored — masking the 409 path under test.
+    const anchorPayload = { chain: "ethereum", txHash: "0xabc1234567" };
 
-    await authedPost(`/notarizations/${encodeURIComponent(id)}/anchor`, anchorPayload);
+    const first = await authedPost(`/notarizations/${encodeURIComponent(id)}/anchor`, anchorPayload);
+    expect(first.status).toBe(200);
     const { status } = await authedPost(`/notarizations/${encodeURIComponent(id)}/anchor`, anchorPayload);
     expect(status).toBe(409);
   });

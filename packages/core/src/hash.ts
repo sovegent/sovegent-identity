@@ -16,6 +16,15 @@ export function hashObject(obj: Record<string, unknown>): string {
   return hashString(JSON.stringify(sortKeys(obj)));
 }
 
+/**
+ * Canonical (deterministic, key-sorted) UTF-8 byte serialization of a JSON value.
+ * Use this for any payload that must be re-derived and hash-compared later
+ * (e.g. attestation / notarization verification) so key ordering can't change the bytes.
+ */
+export function canonicalBytes(obj: unknown): Uint8Array {
+  return new TextEncoder().encode(JSON.stringify(sortKeys(obj)));
+}
+
 function sortKeys(obj: unknown): unknown {
   if (Array.isArray(obj)) return obj.map(sortKeys);
   if (obj !== null && typeof obj === "object") {
