@@ -21,8 +21,8 @@ pnpm add @liberproof/zk snarkjs
 See [docs/zk/setup.md](../../docs/zk/setup.md) for full setup instructions.
 
 ```bash
-circom circuits/ageProof.circom --wasm --r1cs -o build/
-snarkjs groth16 setup build/ageProof.r1cs pot12_final.ptau ageProof.zkey
+npm install            # circomlib + snarkjs
+npm run build:circuit  # compile + dev trusted setup -> artifacts/
 ```
 
 ## Usage

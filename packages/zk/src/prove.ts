@@ -1,48 +1,47 @@
 /**
- * ZK Proof Generation
+ * ZK proof generation & verification (Groth16).
  *
- * Circuits are compiled separately using circom.
- * Run: circom circuits/ageProof.circom --wasm --r1cs -o build/
- * Then generate zkey: snarkjs groth16 setup build/ageProof.r1cs pot12_final.ptau circuits/ageProof.zkey
- *
- * See docs/zk/setup.md for full circuit setup guide.
+ * The circuit is compiled and its keys generated separately — see
+ * `scripts/build.sh` and `docs/zk/setup.md`. snarkjs is a peer dependency,
+ * imported lazily because it is only needed at proof time.
  */
 import type { ZKClaimInput, ZKProof } from "./types.js";
 
-/**
- * Generate a ZK proof given a witness and compiled circuit.
- * Requires snarkjs as a peer dependency.
- */
-export async function generateProof(input: ZKClaimInput): Promise<ZKProof> {
-  // Dynamic import — snarkjs is large and only needed at proof generation time
-  // @ts-ignore — snarkjs is an optional peer dep, types not required at build time
-    const snarkjs = await import("snarkjs").catch(() => {
-    throw new Error(
-      "snarkjs not installed. Run: pnpm add snarkjs in @liberproof/zk"
-    );
-  });
+/** A verification key: the parsed object, an http(s) URL, or a local file path. */
+export type VerificationKeySource = string | Record<string, unknown>;
 
+async function loadSnarkjs() {
+  // @ts-ignore — optional peer dep; types are not required at build time.
+  return import("snarkjs").catch(() => {
+    throw new Error("snarkjs not installed. Run `npm i snarkjs` in @liberproof/zk.");
+  });
+}
+
+/** Generate a Groth16 proof from a private witness + compiled circuit + proving key. */
+export async function generateProof(input: ZKClaimInput): Promise<ZKProof> {
+  const snarkjs = await loadSnarkjs();
   const { proof, publicSignals } = await snarkjs.groth16.fullProve(
     input.witness,
     input.wasmPath,
-    input.zkeyPath
+    input.zkeyPath,
   );
-
   return { protocol: "groth16", proof, publicSignals };
 }
 
-/**
- * Verify a ZK proof against a verification key.
- */
+/** Verify a Groth16 proof against a verification key. */
 export async function verifyProof(
   zkProof: ZKProof,
-  vkeyPath: string
+  vkey: VerificationKeySource,
 ): Promise<boolean> {
-  // @ts-ignore — snarkjs is an optional peer dep, types not required at build time
-    const snarkjs = await import("snarkjs").catch(() => {
-    throw new Error("snarkjs not installed.");
-  });
+  const snarkjs = await loadSnarkjs();
+  const key = await resolveVkey(vkey);
+  return snarkjs.groth16.verify(key, zkProof.publicSignals, zkProof.proof);
+}
 
-  const vkey = await fetch(vkeyPath).then((r) => r.json());
-  return snarkjs.groth16.verify(vkey, zkProof.publicSignals, zkProof.proof);
+/** Resolve a verification key from an object, an http(s) URL (browser), or a file path (Node). */
+async function resolveVkey(src: VerificationKeySource): Promise<Record<string, unknown>> {
+  if (typeof src !== "string") return src;
+  if (/^https?:\/\//.test(src)) return fetch(src).then((r) => r.json());
+  const { readFile } = await import("node:fs/promises");
+  return JSON.parse(await readFile(src, "utf8"));
 }

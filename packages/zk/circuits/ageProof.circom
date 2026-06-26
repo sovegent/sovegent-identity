@@ -1,27 +1,29 @@
 pragma circom 2.0.0;
 
+include "circomlib/circuits/comparators.circom";
+
 /**
- * AgeProof — prove you are >= minAge without revealing your actual age.
+ * AgeProof — prove age >= minAge without revealing the actual age.
  *
- * Private inputs: age (the actual age, kept secret)
- * Public inputs:  minAge (the threshold being checked)
- * Output:         1 if age >= minAge, else circuit is unsatisfiable
+ * Private input: age     (the secret; never leaves the prover)
+ * Public input:  minAge  (the threshold being proven against)
+ * Output:        valid   (1 when age >= minAge; the circuit is otherwise unsatisfiable)
  *
- * Compile:
- *   circom ageProof.circom --wasm --r1cs -o ../build/
+ * Build (requires `npm i circomlib`):
+ *   circom ageProof.circom -l node_modules --wasm --r1cs --sym -o ../build/
  */
 template AgeProof() {
-  signal input age;        // private
-  signal input minAge;     // public
+    signal input age;       // private
+    signal input minAge;    // public
+    signal output valid;    // 1 iff age >= minAge
 
-  // Enforce age >= minAge
-  // Uses a range check: (age - minAge) must be non-negative
-  signal diff;
-  diff <== age - minAge;
+    // 8-bit comparison — ample for human ages (0–255).
+    component ge = GreaterEqThan(8);
+    ge.in[0] <== age;
+    ge.in[1] <== minAge;
 
-  // Assert diff is in range [0, 2^8) — enough for age checks up to 255
-  component n2b = Num2Bits(8);
-  n2b.in <== diff;
+    valid <== ge.out;
+    valid === 1;            // a valid proof can only exist when age >= minAge
 }
 
 component main { public [minAge] } = AgeProof();

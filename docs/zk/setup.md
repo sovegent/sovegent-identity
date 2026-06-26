@@ -1,48 +1,66 @@
 # ZK Circuit Setup
 
-LiberProof uses circom 2.0 circuits compiled to WASM for in-browser
-proof generation. snarkjs handles the prover and verifier.
+LiberProof's zero-knowledge layer uses circom 2.x circuits compiled to WASM,
+with snarkjs as the Groth16 prover/verifier. Proofs are generated client-side
+(browser or Node) — the witness never leaves the prover.
+
+The artifacts in `packages/zk/artifacts/` are committed and ready to use; this
+guide is for rebuilding them.
 
 ## Prerequisites
 
 ```bash
-# Install circom
-cargo install --git https://github.com/iden3/circom
+# circom 2.x — prebuilt binary, no Rust toolchain needed:
+curl -fsSL -o circom \
+  https://github.com/iden3/circom/releases/download/v2.1.9/circom-linux-amd64
+chmod +x circom && sudo mv circom /usr/local/bin/
 
-# Install snarkjs
-pnpm add -g snarkjs
+# circuit library (circomlib) + prover (snarkjs):
+npm install         # in packages/zk
 ```
 
-## Compile the age proof circuit
+## Build
 
 ```bash
-cd packages/zk/circuits
-
-# Compile
-circom ageProof.circom --wasm --r1cs --sym -o ../build/
-
-# Powers of tau (use an existing ceremony for production)
-snarkjs powersoftau new bn128 12 pot12_0.ptau
-snarkjs powersoftau prepare phase2 pot12_0.ptau pot12_final.ptau
-
-# Generate zkey
-snarkjs groth16 setup ../build/ageProof.r1cs pot12_final.ptau ageProof_0.zkey
-snarkjs zkey contribute ageProof_0.zkey ageProof_final.zkey --name="LiberProof v1"
-
-# Export verification key
-snarkjs zkey export verificationkey ageProof_final.zkey verification_key.json
+npm run build:circuit      # packages/zk/scripts/build.sh
 ```
 
-## Generate a proof
+Compiles the circuit and runs a development Groth16 trusted setup, writing
+`ageProof.{wasm,zkey}` + `ageProof.vkey.json` into `artifacts/`. Equivalent to:
+
+```bash
+mkdir -p build
+circom circuits/ageProof.circom -l node_modules --wasm --r1cs --sym -o build/
+snarkjs powersoftau new bn128 12 build/pot_0.ptau
+snarkjs powersoftau contribute build/pot_0.ptau build/pot_1.ptau --name="liberproof dev"
+snarkjs powersoftau prepare phase2 build/pot_1.ptau build/pot_final.ptau
+snarkjs groth16 setup build/ageProof.r1cs build/pot_final.ptau build/age_0.zkey
+snarkjs zkey contribute build/age_0.zkey artifacts/ageProof.zkey --name="liberproof v1"
+snarkjs zkey export verificationkey artifacts/ageProof.zkey artifacts/ageProof.vkey.json
+cp build/ageProof_js/ageProof.wasm artifacts/ageProof.wasm
+```
+
+## Generate & verify a proof
 
 ```ts
-import { generateProof } from "@liberproof/zk";
+import { generateProof, verifyProof } from "@liberproof/zk";
 
 const proof = await generateProof({
-  witness: { age: 25, minAge: 18 },
-  wasmPath: "./build/ageProof_js/ageProof.wasm",
-  zkeyPath: "./circuits/ageProof_final.zkey",
+  witness: { age: 25, minAge: 18 },   // age is private — never leaves the prover
+  wasmPath: "artifacts/ageProof.wasm",
+  zkeyPath: "artifacts/ageProof.zkey",
 });
+// proof.publicSignals === ["1", "18"]  → [valid, minAge]; age >= minAge proved
 
-// publicSignals: ["1"] means age >= minAge proved ✓
+const ok = await verifyProof(proof, "artifacts/ageProof.vkey.json"); // true
 ```
+
+`verifyProof` accepts the key as a parsed object, an http(s) URL (browser), or a
+local file path (Node / CLI).
+
+## Production setup ⚠️
+
+The committed keys come from a **single-contributor** ceremony — fine for
+development, tests, and demos, but production must replace the proving key with
+the output of a **multi-party trusted-setup ceremony** (so no single party holds
+the toxic waste). Until then, ZK selective-disclosure is alpha.
