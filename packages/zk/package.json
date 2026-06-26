@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist build artifacts",
     "build:circuit": "bash scripts/build.sh",
-    "pretest": "test -f artifacts/ageProof.zkey || npm run build:circuit"
+    "pretest": "test -f artifacts/ageProof.zkey -a -f artifacts/rangeProof.zkey || npm run build:circuit"
   },
   "dependencies": {
     "@liberproof/core": "workspace:*"
