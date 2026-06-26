@@ -22,10 +22,22 @@
     "@liberproof/core": "workspace:*"
   },
   "peerDependencies": {
-    "viem": "^2.0.0"
+    "viem": "^2.0.0",
+    "@stricahq/typhonjs": "^3.0.0",
+    "@stricahq/bip32ed25519": "^1.0.0",
+    "bignumber.js": "^9.0.0"
   },
   "peerDependenciesMeta": {
     "viem": {
+      "optional": true
+    },
+    "@stricahq/typhonjs": {
+      "optional": true
+    },
+    "@stricahq/bip32ed25519": {
+      "optional": true
+    },
+    "bignumber.js": {
       "optional": true
     }
   },

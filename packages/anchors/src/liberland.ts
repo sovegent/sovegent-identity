@@ -85,22 +85,30 @@ export class LiberlandAnchorAdapter implements AnchorAdapter {
   }
 
   /**
-   * Verify a proof hash by fetching the block and checking the remark.
-   * Requires the txHash from the anchor record.
+   * Verify a proof hash by fetching the block (anchor.txHash = block hash)
+   * and confirming a system.remark extrinsic equals REMARK_PREFIX + proofHash.
    */
-  async verify(proofHash: string): Promise<boolean> {
-    // Without the specific txHash, we can't scan the full chain efficiently.
-    // The intended flow is:
-    //   1. Store anchor.txHash from the anchor() call
-    //   2. Pass it here to fetch and inspect the extrinsic
-    //   3. Check the remark equals "LIBERPROOF:v1:<proofHash>"
-    //
-    // Anyone can independently verify by pasting the txHash into
-    // https://liberland.subscan.io and checking the remark field.
-    console.warn(
-      `LiberlandAnchorAdapter.verify: check txHash on the Liberland block explorer. ` +
-      `Expected remark: "${REMARK_PREFIX}${proofHash}"`
-    );
-    return true;
+  async verify(proofHash: string, anchor: ChainAnchor): Promise<boolean> {
+    // @ts-ignore — optional peer dep
+    const { ApiPromise, WsProvider } = await import("@polkadot/api").catch(() => {
+      throw new Error("@polkadot/api not installed. Run: npm i @polkadot/api @polkadot/keyring");
+    });
+    const provider = new WsProvider(this.endpoint);
+    const api = await ApiPromise.create({ provider });
+    try {
+      const expected = `${REMARK_PREFIX}${proofHash}`;
+      const signedBlock = await api.rpc.chain.getBlock(anchor.txHash);
+      for (const ex of signedBlock.block.extrinsics) {
+        const { method } = ex;
+        if (method.section === "system" && method.method === "remark") {
+          const arg: any = method.args[0];
+          const text = typeof arg?.toUtf8 === "function" ? arg.toUtf8() : arg.toString();
+          if (text === expected) return true;
+        }
+      }
+      return false;
+    } finally {
+      await api.disconnect();
+    }
   }
 }

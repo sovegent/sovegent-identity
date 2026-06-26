@@ -5,6 +5,6 @@ export interface AnchorAdapter {
   readonly chain: string;
   /** Submit a proof hash on-chain. Returns the anchor record. */
   anchor(proofHash: string): Promise<ChainAnchor>;
-  /** Check if a proof hash is anchored on-chain. */
-  verify(proofHash: string): Promise<boolean>;
+  /** Verify a proof hash is anchored on-chain, given the anchor record from anchor(). */
+  verify(proofHash: string, anchor: ChainAnchor): Promise<boolean>;
 }

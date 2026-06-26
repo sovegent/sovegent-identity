@@ -17,6 +17,7 @@ import type { ChainAnchor } from "@liberproof/core";
 type PublicClient = {
   getTransactionReceipt: (args: { hash: `0x${string}` }) => Promise<{ blockNumber: bigint; status: string }>;
   waitForTransactionReceipt: (args: { hash: `0x${string}` }) => Promise<{ blockNumber: bigint; status: string }>;
+  getTransaction: (args: { hash: `0x${string}` }) => Promise<{ input: `0x${string}` }>;
   readContract: (args: unknown) => Promise<unknown>;
 };
 
@@ -79,25 +80,13 @@ export class EvmAnchorAdapter implements AnchorAdapter {
   }
 
   /**
-   * Verify a proof hash is anchored by scanning for the calldata fingerprint.
-   * Note: This is a best-effort scan — it checks the most recent blocks.
-   * For production, index with a subgraph or event listener.
+   * Verify a proof hash is anchored on-chain by fetching the tx and
+   * comparing its calldata to the expected LiberProof fingerprint.
    */
-  async verify(proofHash: string): Promise<boolean> {
+  async verify(proofHash: string, anchor: ChainAnchor): Promise<boolean> {
     try {
-      // Without an indexer, we trust the record stored in our DB.
-      // Full verification requires checking the tx on-chain directly:
-      // 1. Look up our stored txHash for this proofHash
-      // 2. Fetch the tx via publicClient.getTransaction
-      // 3. Check tx.data === buildCalldata(proofHash)
-      //
-      // This is intentionally left as a lightweight flag — the DB anchor record
-      // contains the txHash which anyone can independently verify on any block explorer.
-      console.warn(
-        "EvmAnchorAdapter.verify: for full trustless verification, check the txHash on your block explorer. " +
-        `Expected calldata: ${buildCalldata(proofHash)}`
-      );
-      return true; // Optimistic — real verification done via txHash lookup
+      const tx = await this.config.publicClient.getTransaction({ hash: anchor.txHash as `0x${string}` });
+      return (tx.input ?? "").toLowerCase() === buildCalldata(proofHash).toLowerCase();
     } catch {
       return false;
     }
