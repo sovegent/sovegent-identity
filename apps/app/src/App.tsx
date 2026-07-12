@@ -74,18 +74,18 @@ function LoginScreen({ walletType, onConnect, busy, error }: {
   walletType: string; onConnect: () => void; busy: boolean; error: string | null;
 }) {
   const hasWallet = walletType !== "none";
-  const isLiberVault = walletType === "libervault";
+  const isSovegentWallet = walletType === "sovegent-wallet";
 
   return (
     <div style={s.loginPage}>
       <div style={s.loginCard}>
         <div style={s.bigLogo}>⬡</div>
-        <h1 style={s.loginTitle}>LiberProof</h1>
+        <h1 style={s.loginTitle}>Sovegent Identity</h1>
         <p style={s.loginSub}>Identity & Verification — powered by your wallet</p>
 
-        {isLiberVault && (
+        {isSovegentWallet && (
           <div style={s.walletBadge}>
-            <span style={{ color: "var(--green)" }}>●</span> LiberVault detected
+            <span style={{ color: "var(--green)" }}>●</span> Sovegent Wallet detected
           </div>
         )}
 
@@ -95,17 +95,17 @@ function LoginScreen({ walletType, onConnect, busy, error }: {
 
         {!hasWallet && (
           <a
-            href="https://github.com/liberlayer/libervault"
+            href="https://github.com/sovegent/sovegent-wallet"
             target="_blank"
             rel="noopener noreferrer"
             style={s.installLink}
           >
-            ↗ Install LiberVault
+            ↗ Install Sovegent Wallet
           </a>
         )}
 
         {error && <p style={s.loginError}>{error}</p>}
-        <p style={s.loginHint}>Compatible with LiberVault, MetaMask, and any EIP-1193 wallet</p>
+        <p style={s.loginHint}>Compatible with Sovegent Wallet, MetaMask, and any EIP-1193 wallet</p>
       </div>
     </div>
   );
@@ -122,7 +122,7 @@ function Sidebar({ address, walletType, view, onNav, onSignOut }: {
   ];
   return (
     <aside style={s.sidebar}>
-      <div style={s.sidebarLogo}><span style={{ color: "var(--accent)" }}>⬡</span> LiberProof</div>
+      <div style={s.sidebarLogo}><span style={{ color: "var(--accent)" }}>⬡</span> Sovegent Identity</div>
       <nav style={s.nav}>
         {nav.map(n => (
           <button key={n.id} onClick={() => onNav(n.id)}
@@ -132,7 +132,7 @@ function Sidebar({ address, walletType, view, onNav, onSignOut }: {
         ))}
       </nav>
       <div style={s.sidebarFooter}>
-        <p style={s.walletTypeBadge}>{walletType === "libervault" ? "🔐 LiberVault" : "🦊 " + walletType}</p>
+        <p style={s.walletTypeBadge}>{walletType === "sovegent-wallet" ? "🔐 Sovegent Wallet" : "🦊 " + walletType}</p>
         <p style={s.addressChip}>{address.slice(0, 6)}…{address.slice(-4)}</p>
         <button onClick={onSignOut} style={s.signOutBtn}>Sign out</button>
       </div>
@@ -182,7 +182,7 @@ function ProofRow({ id, title, sub, anchored }: { id: string; title: string; sub
       </div>
       <div style={s.proofActions}>
         {anchored && <span style={s.anchorBadge}>⛓ Anchored</span>}
-        <a href={`https://verify.liberproof.com/p/${encodeURIComponent(id)}`}
+        <a href={`https://verify.identity.sovegent.com/p/${encodeURIComponent(id)}`}
           target="_blank" rel="noopener noreferrer" style={s.verifyLink}>Verify ↗</a>
       </div>
     </div>
@@ -212,7 +212,7 @@ function NotarizeView({ onDone }: { onDone: () => void }) {
         proofJson: JSON.stringify({
           payloadHash: hashHex,
           created: new Date().toISOString(),
-          note: "Browser hash — use LiberVault extension for full cryptographic proof",
+          note: "Browser hash — use Sovegent Wallet extension for full cryptographic proof",
         }),
       });
       setResult(record);
@@ -228,9 +228,9 @@ function NotarizeView({ onDone }: { onDone: () => void }) {
         <p style={s.mono}>ID: {result.id}</p>
         <p style={s.mono}>SHA-256: {result.documentHash}</p>
         <p style={{ marginTop: 16, color: "var(--muted)", fontSize: 13 }}>Share this link to let anyone verify:</p>
-        <a href={`https://verify.liberproof.com/p/${encodeURIComponent(result.id)}`}
+        <a href={`https://verify.identity.sovegent.com/p/${encodeURIComponent(result.id)}`}
           target="_blank" rel="noopener noreferrer" style={s.verifyLink}>
-          verify.liberproof.com/p/… ↗
+          verify.identity.sovegent.com/p/… ↗
         </a>
         <button onClick={onDone} style={{ ...s.connectBtn, marginTop: 24 }}>View history</button>
       </div>
@@ -287,7 +287,7 @@ function AttestView({ address, onDone }: { address: string; onDone: () => void }
       <div style={s.successCard}>
         <p style={{ color: "var(--green)", fontWeight: 700, fontSize: 18, marginBottom: 16 }}>Claim attested</p>
         <p style={s.mono}>ID: {result.id}</p>
-        <a href={`https://verify.liberproof.com/p/${encodeURIComponent(result.id)}`}
+        <a href={`https://verify.identity.sovegent.com/p/${encodeURIComponent(result.id)}`}
           target="_blank" rel="noopener noreferrer" style={s.verifyLink}>View proof ↗</a>
         <button onClick={onDone} style={{ ...s.connectBtn, marginTop: 24 }}>View history</button>
       </div>

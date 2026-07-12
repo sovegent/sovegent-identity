@@ -1,11 +1,11 @@
 {
-  "name": "@liberproof/cli",
+  "name": "@sovegent/cli",
   "version": "0.1.0",
-  "description": "LiberProof command-line tool — keygen, attest, notarize, anchor, and ZK proofs",
+  "description": "Sovegent Identity command-line tool — keygen, attest, notarize, anchor, and ZK proofs",
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "bin": {
-    "liberproof": "./dist/cli.js"
+    "sovegent-identity": "./dist/cli.js"
   },
   "files": [
     "dist"
@@ -17,10 +17,10 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@liberproof/anchors": "workspace:*",
-    "@liberproof/core": "workspace:*",
-    "@liberproof/sdk": "workspace:*",
-    "@liberproof/zk": "workspace:*",
+    "@sovegent/anchors": "workspace:*",
+    "@sovegent/core": "workspace:*",
+    "@sovegent/sdk": "workspace:*",
+    "@sovegent/zk": "workspace:*",
     "@noble/curves": "^1.4.0",
     "@noble/hashes": "^1.4.0"
   },

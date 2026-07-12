@@ -32,10 +32,10 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.2.0
         version: 0.2.2(hono@4.12.25)(zod@3.25.76)
-      '@liberproof/anchors':
+      '@sovegent/anchors':
         specifier: workspace:*
         version: link:../../packages/anchors
-      '@liberproof/core':
+      '@sovegent/core':
         specifier: workspace:*
         version: link:../../packages/core
       '@noble/hashes':
@@ -75,7 +75,7 @@ importers:
 
   apps/app:
     dependencies:
-      '@liberproof/sdk':
+      '@sovegent/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
       react:
@@ -106,16 +106,16 @@ importers:
 
   apps/cli:
     dependencies:
-      '@liberproof/anchors':
+      '@sovegent/anchors':
         specifier: workspace:*
         version: link:../../packages/anchors
-      '@liberproof/core':
+      '@sovegent/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@liberproof/sdk':
+      '@sovegent/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
-      '@liberproof/zk':
+      '@sovegent/zk':
         specifier: workspace:*
         version: link:../../packages/zk
       '@noble/curves':
@@ -137,7 +137,7 @@ importers:
 
   apps/verify:
     dependencies:
-      '@liberproof/sdk':
+      '@sovegent/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
       react:
@@ -165,7 +165,7 @@ importers:
 
   packages/anchors:
     dependencies:
-      '@liberproof/core':
+      '@sovegent/core':
         specifier: workspace:*
         version: link:../core
       '@stricahq/bip32ed25519':
@@ -206,13 +206,13 @@ importers:
 
   packages/sdk:
     dependencies:
-      '@liberproof/anchors':
+      '@sovegent/anchors':
         specifier: workspace:*
         version: link:../anchors
-      '@liberproof/core':
+      '@sovegent/core':
         specifier: workspace:*
         version: link:../core
-      '@liberproof/zk':
+      '@sovegent/zk':
         specifier: workspace:*
         version: link:../zk
     devDependencies:
@@ -225,7 +225,7 @@ importers:
 
   packages/zk:
     dependencies:
-      '@liberproof/core':
+      '@sovegent/core':
         specifier: workspace:*
         version: link:../core
       snarkjs:

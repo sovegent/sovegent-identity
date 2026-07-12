@@ -5,13 +5,13 @@
  * Remark format: "LIBERPROOF:v1:<sha256hex>"
  *
  * This is fully interpretable by any Liberland block explorer and by
- * LiberProof's verification tooling without a custom runtime module.
+ * Sovegent Identity's verification tooling without a custom runtime module.
  *
  * Requires @polkadot/api and @polkadot/keyring as peer dependencies:
  *   pnpm add @polkadot/api @polkadot/keyring
  */
 import type { AnchorAdapter } from "./types.js";
-import type { ChainAnchor } from "@liberproof/core";
+import type { ChainAnchor } from "@sovegent/core";
 
 export interface LiberlandAnchorConfig {
   /** WebSocket endpoint. Default: wss://mainnet.liberland.org */

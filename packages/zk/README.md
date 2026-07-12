@@ -1,6 +1,6 @@
-# @liberproof/zk
+# @sovegent/zk
 
-Zero-knowledge proof generation and verification for LiberProof.
+Zero-knowledge proof generation and verification for Sovegent Identity.
 
 ## What's in here
 
@@ -11,7 +11,7 @@ Zero-knowledge proof generation and verification for LiberProof.
 ## Install
 
 ```bash
-pnpm add @liberproof/zk snarkjs
+pnpm add @sovegent/zk snarkjs
 ```
 
 `snarkjs` is a required peer dependency.
@@ -28,7 +28,7 @@ npm run build:circuit  # compile + dev trusted setup -> artifacts/
 ## Usage
 
 ```ts
-import { generateProof, verifyProof } from "@liberproof/zk";
+import { generateProof, verifyProof } from "@sovegent/zk";
 
 const proof = await generateProof({
   witness: { age: 25, minAge: 18 },

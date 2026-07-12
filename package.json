@@ -1,13 +1,13 @@
 {
-  "name": "liberproof",
+  "name": "sovegent-identity",
   "version": "0.1.0",
   "private": true,
-  "description": "LiberProof — Identity & Verification SDK for the LiberLayer ecosystem",
+  "description": "Sovegent Identity — Identity & Verification SDK for the Sovegent ecosystem",
   "license": "AGPL-3.0-or-later",
-  "author": "LiberLayer <hello@liberlayer.com>",
+  "author": "Sovegent <hello@sovegent.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/liberlayer/liberproof.git"
+    "url": "https://github.com/sovegent/sovegent-identity.git"
   },
   "workspaces": [
     "packages/*"
@@ -18,9 +18,9 @@
     "lint": "pnpm -r run lint",
     "typecheck": "pnpm -r run typecheck",
     "clean": "pnpm -r run clean && rm -rf node_modules",
-    "dev:api": "pnpm --filter @liberproof/api dev",
-    "dev:verify": "pnpm --filter @liberproof/verify dev",
-    "dev:app": "pnpm --filter @liberproof/app dev"
+    "dev:api": "pnpm --filter @sovegent/api dev",
+    "dev:verify": "pnpm --filter @sovegent/verify dev",
+    "dev:app": "pnpm --filter @sovegent/app dev"
   },
   "devDependencies": {
     "typescript": "^5.4.0",

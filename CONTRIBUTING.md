@@ -1,15 +1,15 @@
-# Contributing to LiberProof
+# Contributing to Sovegent Identity
 
-Thank you for your interest in contributing. LiberProof is AGPL v3 — all contributions must be compatible with this license.
+Thank you for your interest in contributing. Sovegent Identity is AGPL v3 — all contributions must be compatible with this license.
 
 ## Getting Started
 
 ```bash
-git clone https://github.com/liberlayer/liberproof.git
-cd liberproof
+git clone https://github.com/sovegent/sovegent-identity.git
+cd sovegent-identity
 pnpm install
 pnpm build
-pnpm --filter @liberproof/core test
+pnpm --filter @sovegent/core test
 ```
 
 ## Project Structure
@@ -53,7 +53,7 @@ pnpm typecheck
 - **Liberland anchor verification** — implement `LiberlandAnchorAdapter.verify()` using the txHash
 - **ZK circuits** — additional circuits beyond `ageProof.circom` (e.g. membershipProof, balanceRangeProof)
 - **On-chain anchoring in the API** — wire up `POST /notarizations/:id/anchor` route
-- **LiberVault signing integration** — full SDK signing from the browser extension via `window.liberProof`
+- **Sovegent Wallet signing integration** — full SDK signing from the browser extension via `window.sovegent`
 
 ### Good First Issues
 - Add pagination to `/notarizations` and `/attestations` list endpoints
@@ -65,13 +65,13 @@ pnpm typecheck
 
 - **TypeScript strict mode** — all code must pass `tsc --strict`
 - **Noble crypto only** — use `@noble/hashes` and `@noble/curves` for all crypto, no Web Crypto API in packages
-- **No external HTTP calls** in `@liberproof/core` — it must work fully offline
+- **No external HTTP calls** in `@sovegent/core` — it must work fully offline
 - **AGPL v3 header** in all new source files:
 
 ```ts
 /**
- * LiberProof — [filename]
- * Copyright (C) 2025 LiberLayer
+ * Sovegent Identity — [filename]
+ * Copyright (C) 2025 Sovegent
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 ```
@@ -87,7 +87,7 @@ pnpm typecheck
 
 ## Security
 
-Found a vulnerability? Please **do not open a public issue**. Email `security@liberlayer.com` with details.
+Found a vulnerability? Please **do not open a public issue**. Email `security@sovegent.com` with details.
 
 ## License
 

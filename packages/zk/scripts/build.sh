@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reproducible build for the LiberProof circuits: compile + (dev) Groth16 trusted setup.
+# Reproducible build for the Sovegent Identity circuits: compile + (dev) Groth16 trusted setup.
 # Self-sufficient — fetches the circom binary if it isn't on PATH. Needs node + `npm i`.
 # Builds every circuit listed in CIRCUITS, sharing one powers-of-tau ceremony.
 set -euo pipefail
@@ -23,14 +23,14 @@ SJS="npx --yes snarkjs@0.7"
 
 # Shared powers of tau (2^12 = 4096 constraints — ample for all current circuits).
 echo "→ powers of tau"; $SJS powersoftau new bn128 12 "$BUILD/pot_0.ptau"
-                        $SJS powersoftau contribute "$BUILD/pot_0.ptau" "$BUILD/pot_1.ptau" --name="liberproof dev" -e="$(head -c 64 /dev/urandom | base64)"
+                        $SJS powersoftau contribute "$BUILD/pot_0.ptau" "$BUILD/pot_1.ptau" --name="sovegent dev" -e="$(head -c 64 /dev/urandom | base64)"
                         $SJS powersoftau prepare phase2 "$BUILD/pot_1.ptau" "$BUILD/pot_final.ptau"
 
 for NAME in "${CIRCUITS[@]}"; do
   echo "=== $NAME ==="
   echo "→ compile";       "$CIRCOM" "circuits/$NAME.circom" -l node_modules --wasm --r1cs --sym -o "$BUILD"
   echo "→ groth16 keys";  $SJS groth16 setup "$BUILD/$NAME.r1cs" "$BUILD/pot_final.ptau" "$BUILD/${NAME}_0.zkey"
-                          $SJS zkey contribute "$BUILD/${NAME}_0.zkey" "$ART/$NAME.zkey" --name="liberproof v1" -e="$(head -c 64 /dev/urandom | base64)"
+                          $SJS zkey contribute "$BUILD/${NAME}_0.zkey" "$ART/$NAME.zkey" --name="sovegent v1" -e="$(head -c 64 /dev/urandom | base64)"
                           $SJS zkey export verificationkey "$ART/$NAME.zkey" "$ART/$NAME.vkey.json"
                           cp "$BUILD/${NAME}_js/$NAME.wasm" "$ART/$NAME.wasm"
 done

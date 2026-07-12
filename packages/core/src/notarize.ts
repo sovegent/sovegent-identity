@@ -31,7 +31,7 @@ function notarizationPayload(r: {
 
 /**
  * Notarize a document — hash it, timestamp it, sign it.
- * Chain anchoring is handled by the @liberproof/anchors package.
+ * Chain anchoring is handled by the @sovegent/anchors package.
  */
 export function notarizeDocument(
   input: NotarizationInput,

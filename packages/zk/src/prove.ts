@@ -13,7 +13,7 @@ export type VerificationKeySource = string | Record<string, unknown>;
 async function loadSnarkjs() {
   // @ts-ignore — optional peer dep; types are not required at build time.
   return import("snarkjs").catch(() => {
-    throw new Error("snarkjs not installed. Run `npm i snarkjs` in @liberproof/zk.");
+    throw new Error("snarkjs not installed. Run `npm i snarkjs` in @sovegent/zk.");
   });
 }
 

@@ -1,7 +1,7 @@
 {
-  "name": "@liberproof/api",
+  "name": "@sovegent/api",
   "version": "0.1.0",
-  "description": "LiberProof API — proof storage, SIWE auth, anchoring relay",
+  "description": "Sovegent Identity API — proof storage, SIWE auth, anchoring relay",
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "main": "src/index.ts",
@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.12.0",
-    "@liberproof/core": "workspace:*",
-    "@liberproof/anchors": "workspace:*",
+    "@sovegent/core": "workspace:*",
+    "@sovegent/anchors": "workspace:*",
     "better-sqlite3": "^9.4.3",
     "hono": "^4.12.25",
     "jose": "^5.4.0",

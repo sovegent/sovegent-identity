@@ -1,7 +1,7 @@
 {
-  "name": "@liberproof/sdk",
+  "name": "@sovegent/sdk",
   "version": "0.1.0",
-  "description": "LiberProof unified SDK — the main consumer-facing entry point",
+  "description": "Sovegent Identity unified SDK — the main consumer-facing entry point",
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "main": "./dist/index.js",
@@ -19,9 +19,9 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@liberproof/core": "workspace:*",
-    "@liberproof/anchors": "workspace:*",
-    "@liberproof/zk": "workspace:*"
+    "@sovegent/core": "workspace:*",
+    "@sovegent/anchors": "workspace:*",
+    "@sovegent/zk": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.4.0",

@@ -1,4 +1,4 @@
-import type { ChainAnchor } from "@liberproof/core";
+import type { ChainAnchor } from "@sovegent/core";
 
 /** Common interface every anchor adapter must implement */
 export interface AnchorAdapter {

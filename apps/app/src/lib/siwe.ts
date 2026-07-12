@@ -12,7 +12,7 @@ export async function signInWithWallet(address: string): Promise<string> {
     { address }
   );
 
-  // 2. Sign via wallet bridge (supports LiberVault extended signing + standard EIP-191)
+  // 2. Sign via wallet bridge (supports Sovegent Wallet extended signing + standard EIP-191)
   const signature = await personalSign(message, address);
 
   // 3. Exchange signature for JWT
@@ -21,16 +21,16 @@ export async function signInWithWallet(address: string): Promise<string> {
     { address, signature, message }
   );
 
-  localStorage.setItem("liberproof_token", token);
-  localStorage.setItem("liberproof_address", address.toLowerCase());
+  localStorage.setItem("sovegent_token", token);
+  localStorage.setItem("sovegent_address", address.toLowerCase());
   return token;
 }
 
 export function getStoredAddress(): string | null {
-  return localStorage.getItem("liberproof_address");
+  return localStorage.getItem("sovegent_address");
 }
 
 export function signOut(): void {
-  localStorage.removeItem("liberproof_token");
-  localStorage.removeItem("liberproof_address");
+  localStorage.removeItem("sovegent_token");
+  localStorage.removeItem("sovegent_address");
 }

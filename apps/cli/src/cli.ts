@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * LiberProof CLI — a thin command-line wrapper over the @liberproof/* packages.
+ * Sovegent Identity CLI — a thin command-line wrapper over the @sovegent/* packages.
  *
  * It does NOT reimplement any crypto: keygen uses @noble/curves (the same curve
  * the core signer uses), and all attest/notarize/verify/anchor/zk operations are
- * delegated to @liberproof/sdk, @liberproof/anchors and @liberproof/zk.
+ * delegated to @sovegent/sdk, @sovegent/anchors and @sovegent/zk.
  *
  * Design notes:
  *  - Hand-rolled arg parser (no arg-parsing dependency) to stay dependency-light.
@@ -19,14 +19,14 @@ import { fileURLToPath } from "node:url";
 import { secp256k1 } from "@noble/curves/secp256k1";
 import { bytesToHex } from "@noble/hashes/utils";
 
-import { LiberProof } from "@liberproof/sdk";
-import { CardanoAnchorAdapter } from "@liberproof/anchors";
-import { generateProof, verifyProof } from "@liberproof/zk";
+import { SovegentIdentity } from "@sovegent/sdk";
+import { CardanoAnchorAdapter } from "@sovegent/anchors";
+import { generateProof, verifyProof } from "@sovegent/zk";
 import type {
   SignerConfig,
   Attestation,
   NotarizationRecord,
-} from "@liberproof/core";
+} from "@sovegent/core";
 
 // ---------------------------------------------------------------------------
 // helpers
@@ -185,7 +185,7 @@ function cmdAttest(args: Args): void {
   }
   const subject = getStr(args, "subject", false) ?? "did:example:subject";
   const signer = loadSigner(getStr(args, "key")!);
-  const lp = new LiberProof({ signer });
+  const lp = new SovegentIdentity({ signer });
   const attestation = lp.attest({ subject, claim });
   status(`signed attestation ${attestation.id}`);
   emit(attestation, getStr(args, "out", false));
@@ -196,7 +196,7 @@ function cmdVerifyAttestation(args: Args): void {
   if (!file) fail("usage: verify-attestation <file> --pubkey <pk>");
   const pubkey = getStr(args, "pubkey")!;
   const attestation = readJson<Attestation>(file);
-  const lp = new LiberProof({
+  const lp = new SovegentIdentity({
     signer: { privateKey: "00", algorithm: "secp256k1", verificationMethod: "" },
   });
   const result = lp.verify(attestation, pubkey);
@@ -212,7 +212,7 @@ function cmdNotarize(args: Args): void {
   const data = readFileSync(file);
   const mimeType = getStr(args, "mime", false) ?? "application/octet-stream";
   const label = getStr(args, "label", false);
-  const lp = new LiberProof({ signer });
+  const lp = new SovegentIdentity({ signer });
   const record = lp.notarize({
     data: new Uint8Array(data),
     mimeType,
@@ -228,7 +228,7 @@ function cmdVerifyNotarization(args: Args): void {
   const pubkey = getStr(args, "pubkey")!;
   const record = readJson<NotarizationRecord>(file);
   const orig = getStr(args, "file", false);
-  const lp = new LiberProof({
+  const lp = new SovegentIdentity({
     signer: { privateKey: "00", algorithm: "secp256k1", verificationMethod: "" },
   });
   const originalData = orig ? new Uint8Array(readFileSync(orig)) : undefined;
@@ -263,7 +263,7 @@ async function cmdAnchor(args: Args): Promise<void> {
 
   const record = readJson<Attestation | NotarizationRecord>(file);
   const adapter = new CardanoAnchorAdapter({ networkId, address, paymentXprvHex });
-  const lp = new LiberProof({
+  const lp = new SovegentIdentity({
     signer: { privateKey: "00", algorithm: "secp256k1", verificationMethod: "" },
   });
   status(`anchoring proofHash ${record.proof.payloadHash} on cardano ${network} ...`);
@@ -320,9 +320,9 @@ async function cmdZkVerify(args: Args): Promise<void> {
 // help + dispatch
 // ---------------------------------------------------------------------------
 
-const HELP = `liberproof — verifiable proofs CLI
+const HELP = `sovegent-identity — verifiable proofs CLI
 
-Usage: liberproof <command> [options]
+Usage: sovegent-identity <command> [options]
 
 Commands:
   keygen                         Generate a secp256k1 signer (+ did:key). --out <file>

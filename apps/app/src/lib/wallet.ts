@@ -2,15 +2,15 @@
  * Wallet Provider Bridge
  *
  * Abstracts over:
- *   - LiberVault browser extension (window.liberProof + window.ethereum)
+ *   - Sovegent Wallet browser extension (window.sovegent + window.ethereum)
  *   - MetaMask / any EIP-1193 wallet (window.ethereum)
  *   - No wallet (graceful degradation)
  *
- * LiberVault injects window.liberProof with extended capabilities
+ * Sovegent Wallet injects window.sovegent with extended capabilities
  * beyond the standard EIP-1193 interface (e.g. direct SDK signing).
  */
 
-export type WalletType = "libervault" | "metamask" | "eip1193" | "none";
+export type WalletType = "sovegent-wallet" | "metamask" | "eip1193" | "none";
 
 export interface WalletInfo {
   type: WalletType;
@@ -24,8 +24,8 @@ export function detectWallet(): WalletType {
 
   const win = window as any;
 
-  // LiberVault injects a specific identifier
-  if (win.liberProof?.isLiberVault) return "libervault";
+  // Sovegent Wallet injects a specific identifier
+  if (win.sovegent?.isSovegentWallet) return "sovegent-wallet";
 
   // MetaMask injects window.ethereum with isMetaMask
   if (win.ethereum?.isMetaMask) return "metamask";
@@ -72,10 +72,10 @@ export async function personalSign(message: string, address: string): Promise<st
   const provider = getProvider();
   if (!provider) throw new WalletNotFoundError();
 
-  // LiberVault extended signing — uses the SDK directly for richer proof output
+  // Sovegent Wallet extended signing — uses the SDK directly for richer proof output
   const win = window as any;
-  if (win.liberProof?.sign) {
-    return win.liberProof.sign({ message, address });
+  if (win.sovegent?.sign) {
+    return win.sovegent.sign({ message, address });
   }
 
   // Standard EIP-191 personal_sign
@@ -111,7 +111,7 @@ export function onChainChanged(cb: (chainId: string) => void): () => void {
 export class WalletNotFoundError extends Error {
   constructor() {
     super(
-      "No wallet detected. Install LiberVault to get started: https://github.com/liberlayer/libervault"
+      "No wallet detected. Install Sovegent Wallet to get started: https://github.com/sovegent/sovegent-wallet"
     );
     this.name = "WalletNotFoundError";
   }

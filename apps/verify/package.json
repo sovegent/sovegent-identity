@@ -1,7 +1,7 @@
 {
-  "name": "@liberproof/verify",
+  "name": "@sovegent/verify",
   "version": "0.1.0",
-  "description": "LiberProof public proof verification viewer",
+  "description": "Sovegent Identity public proof verification viewer",
   "license": "AGPL-3.0-or-later",
   "private": true,
   "type": "module",
@@ -15,7 +15,7 @@
   "dependencies": {
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "@liberproof/sdk": "workspace:*"
+    "@sovegent/sdk": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",

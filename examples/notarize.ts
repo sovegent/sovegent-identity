@@ -3,11 +3,11 @@
  *
  * Run: npx tsx examples/notarize.ts
  */
-import { LiberProof } from "@liberproof/sdk";
-import { LiberlandAnchorAdapter } from "@liberproof/anchors";
+import { SovegentIdentity } from "@sovegent/sdk";
+import { LiberlandAnchorAdapter } from "@sovegent/anchors";
 import { readFileSync } from "fs";
 
-const lp = new LiberProof({
+const lp = new SovegentIdentity({
   signer: {
     privateKey: process.env.PRIVATE_KEY ?? "",
     algorithm: "secp256k1",

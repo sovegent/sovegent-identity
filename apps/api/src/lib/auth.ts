@@ -1,7 +1,7 @@
 /**
  * SIWE — Sign-In with Ethereum
  * Wallet signs a challenge message → API returns a JWT.
- * Compatible with LiberVault (secp256k1) and any EIP-4361 wallet.
+ * Compatible with Sovegent Wallet (secp256k1) and any EIP-4361 wallet.
  */
 import { SignJWT, jwtVerify } from "jose";
 import { randomBytes, bytesToHex } from "@noble/hashes/utils";
@@ -24,13 +24,13 @@ export function buildSiweMessage(params: {
   nonce: string;
   domain?: string;
 }): string {
-  const domain = params.domain ?? "liberproof.com";
+  const domain = params.domain ?? "identity.sovegent.com";
   const issuedAt = new Date().toISOString();
   return [
     `${domain} wants you to sign in with your Ethereum account:`,
     params.address,
     "",
-    "Sign in to LiberProof — no password required.",
+    "Sign in to Sovegent Identity — no password required.",
     "",
     `URI: https://${domain}`,
     "Version: 1",

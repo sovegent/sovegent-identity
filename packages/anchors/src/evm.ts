@@ -1,7 +1,7 @@
 /**
  * EVM Anchor Adapter
  *
- * Embeds a LiberProof fingerprint in transaction calldata.
+ * Embeds a Sovegent Identity fingerprint in transaction calldata.
  * Format: `0x6c70663a` ("lpf:") + 32-byte proof hash
  * ~21,000 + ~4,000 gas per anchor (~$0.01-0.50 depending on chain/gas price)
  *
@@ -11,7 +11,7 @@
  * Requires viem as a peer dependency: pnpm add viem
  */
 import type { AnchorAdapter } from "./types.js";
-import type { ChainAnchor } from "@liberproof/core";
+import type { ChainAnchor } from "@sovegent/core";
 
 // Lazy viem types — we import at runtime to keep viem as a peer dep
 type PublicClient = {
@@ -81,7 +81,7 @@ export class EvmAnchorAdapter implements AnchorAdapter {
 
   /**
    * Verify a proof hash is anchored on-chain by fetching the tx and
-   * comparing its calldata to the expected LiberProof fingerprint.
+   * comparing its calldata to the expected Sovegent Identity fingerprint.
    */
   async verify(proofHash: string, anchor: ChainAnchor): Promise<boolean> {
     try {

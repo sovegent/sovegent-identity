@@ -1,7 +1,7 @@
 {
-  "name": "@liberproof/zk",
+  "name": "@sovegent/zk",
   "version": "0.1.0",
-  "description": "Zero-knowledge proof primitives for LiberProof",
+  "description": "Zero-knowledge proof primitives for Sovegent Identity",
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "main": "./dist/index.js",
@@ -21,7 +21,7 @@
     "pretest": "test -f artifacts/ageProof.zkey -a -f artifacts/rangeProof.zkey || npm run build:circuit"
   },
   "dependencies": {
-    "@liberproof/core": "workspace:*"
+    "@sovegent/core": "workspace:*"
   },
   "peerDependencies": {
     "snarkjs": "^0.7.0"

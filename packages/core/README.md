@@ -1,6 +1,6 @@
-# @liberproof/core
+# @sovegent/core
 
-Core cryptographic primitives for the LiberProof ecosystem.
+Core cryptographic primitives for the Sovegent Identity ecosystem.
 
 ## What's in here
 
@@ -13,13 +13,13 @@ Core cryptographic primitives for the LiberProof ecosystem.
 ## Install
 
 ```bash
-pnpm add @liberproof/core
+pnpm add @sovegent/core
 ```
 
 ## Usage
 
 ```ts
-import { notarizeDocument, createAttestation, verifyAttestation } from "@liberproof/core";
+import { notarizeDocument, createAttestation, verifyAttestation } from "@sovegent/core";
 
 const signer = {
   privateKey: "0xabc...",

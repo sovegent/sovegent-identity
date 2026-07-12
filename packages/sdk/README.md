@@ -1,19 +1,19 @@
-# @liberproof/sdk
+# @sovegent/sdk
 
-The unified LiberProof SDK. Everything in one import.
+The unified Sovegent Identity SDK. Everything in one import.
 
 ## Install
 
 ```bash
-pnpm add @liberproof/sdk
+pnpm add @sovegent/sdk
 ```
 
 ## Quick Start
 
 ```ts
-import { LiberProof } from "@liberproof/sdk";
+import { SovegentIdentity } from "@sovegent/sdk";
 
-const lp = new LiberProof({
+const lp = new SovegentIdentity({
   signer: {
     privateKey: "0xabc...",
     algorithm: "secp256k1",
@@ -38,16 +38,16 @@ const result = lp.verify(attestation, issuerPublicKey);
 console.log(result.valid); // true
 
 // Anchor on-chain
-import { EvmAnchorAdapter } from "@liberproof/sdk";
+import { EvmAnchorAdapter } from "@sovegent/sdk";
 const anchored = await lp.anchor(record, new EvmAnchorAdapter({ ... }));
 ```
 
 ## What's included
 
 Re-exports everything from:
-- `@liberproof/core` — hashing, signing, types, attestations, notarization
-- `@liberproof/anchors` — EVM and Liberland anchor adapters
-- `@liberproof/zk` — ZK proof types (generation requires `snarkjs`)
+- `@sovegent/core` — hashing, signing, types, attestations, notarization
+- `@sovegent/anchors` — EVM and Liberland anchor adapters
+- `@sovegent/zk` — ZK proof types (generation requires `snarkjs`)
 
 ## License
 

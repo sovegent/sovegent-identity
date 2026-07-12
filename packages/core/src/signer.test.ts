@@ -14,7 +14,7 @@ describe("signPayload + verifySignature (secp256k1)", () => {
   it("produces a valid signature that verifies", () => {
     const { privateKey, publicKey } = makeKeypair();
     const config: SignerConfig = { privateKey, algorithm: "secp256k1", verificationMethod: "0xTest" };
-    const proof = signPayload(new TextEncoder().encode("hello LiberProof"), config);
+    const proof = signPayload(new TextEncoder().encode("hello Sovegent Identity"), config);
     expect(proof.signature).toHaveLength(128);
     expect(proof.payloadHash).toHaveLength(64);
     expect(verifySignature(proof, publicKey)).toBe(true);

@@ -1,12 +1,12 @@
 # Liberland Blockchain Anchor Adapter
 
 Anchors proof hashes on the Liberland substrate chain using `system.remark`
-extrinsics. This is the native anchoring method for the LiberLayer ecosystem.
+extrinsics. This is the native anchoring method for the Sovegent ecosystem.
 
 ## Setup
 
 ```bash
-pnpm add @polkadot/api @polkadot/keyring @liberproof/anchors
+pnpm add @polkadot/api @polkadot/keyring @sovegent/anchors
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ pnpm add @polkadot/api @polkadot/keyring @liberproof/anchors
 ```ts
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import { Keyring } from "@polkadot/keyring";
-import { LiberlandAnchorAdapter } from "@liberproof/anchors";
+import { LiberlandAnchorAdapter } from "@sovegent/anchors";
 
 const api = await ApiPromise.create({ provider: new WsProvider("wss://mainnet.liberland.org") });
 const keyring = new Keyring({ type: "sr25519" });
@@ -28,5 +28,5 @@ const anchor = await adapter.anchor(record.proof.payloadHash);
 
 `LIBERPROOF:v1:<sha256hex>`
 
-This is interpretable by any Liberland block explorer and by LiberProof's
+This is interpretable by any Liberland block explorer and by Sovegent Identity's
 verification tooling without requiring a custom runtime module.

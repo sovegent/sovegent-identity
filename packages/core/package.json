@@ -1,5 +1,5 @@
 {
-  "name": "@liberproof/core",
+  "name": "@sovegent/core",
   "version": "0.1.0",
   "description": "Core primitives: hashing, signing, W3C Verifiable Credentials, attestations",
   "license": "AGPL-3.0-or-later",

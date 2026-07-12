@@ -1,4 +1,4 @@
-# LiberProof Deployment Guide
+# Sovegent Identity Deployment Guide
 
 ## Prerequisites
 
@@ -22,8 +22,8 @@ npm install -g pnpm pm2
 ### 2. Clone and build
 
 ```bash
-git clone https://github.com/liberlayer/liberproof.git /var/www/liberproof
-cd /var/www/liberproof
+git clone https://github.com/sovegent/sovegent-identity.git /var/www/sovegent-identity
+cd /var/www/sovegent-identity
 pnpm install
 pnpm build
 ```
@@ -52,25 +52,25 @@ pm2 startup   # follow the printed command to enable on boot
 ### 6. SSL certificates
 
 ```bash
-sudo certbot --nginx -d api.liberproof.com -d verify.liberproof.com -d app.liberproof.com
+sudo certbot --nginx -d api.identity.sovegent.com -d verify.identity.sovegent.com -d app.identity.sovegent.com
 ```
 
 ### 7. NGINX config
 
 ```bash
 sudo cp infra/nginx/*.conf /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/api.liberproof.com.conf /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/verify.liberproof.com.conf /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/app.liberproof.com.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/api.identity.sovegent.com.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/verify.identity.sovegent.com.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/app.identity.sovegent.com.conf /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
 ### 8. Deploy frontend builds
 
 ```bash
-mkdir -p /var/www/liberproof/verify/dist /var/www/liberproof/app/dist
-cp -r apps/verify/dist/* /var/www/liberproof/verify/dist/
-cp -r apps/app/dist/* /var/www/liberproof/app/dist/
+mkdir -p /var/www/sovegent-identity/verify/dist /var/www/sovegent-identity/app/dist
+cp -r apps/verify/dist/* /var/www/sovegent-identity/verify/dist/
+cp -r apps/app/dist/* /var/www/sovegent-identity/app/dist/
 ```
 
 ---
@@ -78,15 +78,15 @@ cp -r apps/app/dist/* /var/www/liberproof/app/dist/
 ## Option B — Docker Compose
 
 ```bash
-git clone https://github.com/liberlayer/liberproof.git
-cd liberproof
+git clone https://github.com/sovegent/sovegent-identity.git
+cd sovegent-identity
 cp apps/api/.env.example apps/api/.env
 # edit .env
 
 # Build frontends first
 pnpm install
-pnpm --filter @liberproof/verify build
-pnpm --filter @liberproof/app build
+pnpm --filter @sovegent/verify build
+pnpm --filter @sovegent/app build
 
 # Launch everything
 docker compose -f infra/docker/docker-compose.yml up -d
@@ -124,11 +124,11 @@ Put NGINX or Traefik in front for SSL in production.
 ## Updating
 
 ```bash
-cd /var/www/liberproof
+cd /var/www/sovegent-identity
 git pull
 pnpm install
 pnpm build
-pm2 restart liberproof-api
+pm2 restart sovegent-identity-api
 # redeploy frontend builds as in step 8
 ```
 
@@ -140,13 +140,13 @@ Once a proof is created, record its on-chain anchor by calling:
 
 ```bash
 # Notarization
-curl -X POST https://api.liberproof.com/notarizations/urn:liberproof:notarization:abc123.../anchor \
+curl -X POST https://api.identity.sovegent.com/notarizations/urn:liberproof:notarization:abc123.../anchor \
   -H "Authorization: Bearer YOUR_JWT" \
   -H "Content-Type: application/json" \
   -d '{"chain":"liberland","txHash":"0xabc...","blockNumber":12345}'
 
 # Attestation
-curl -X POST https://api.liberproof.com/attestations/urn:liberproof:attestation:def456.../anchor \
+curl -X POST https://api.identity.sovegent.com/attestations/urn:liberproof:attestation:def456.../anchor \
   -H "Authorization: Bearer YOUR_JWT" \
   -H "Content-Type: application/json" \
   -d '{"chain":"ethereum","txHash":"0xdef..."}'

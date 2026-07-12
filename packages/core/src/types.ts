@@ -1,5 +1,5 @@
 /**
- * LiberProof Core Types
+ * Sovegent Identity Core Types
  * W3C Verifiable Credentials aligned
  */
 

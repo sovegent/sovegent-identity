@@ -1,6 +1,6 @@
 # ZK Circuit Setup
 
-LiberProof's zero-knowledge layer uses circom 2.x circuits compiled to WASM,
+Sovegent Identity's zero-knowledge layer uses circom 2.x circuits compiled to WASM,
 with snarkjs as the Groth16 prover/verifier. Proofs are generated client-side
 (browser or Node) — the witness never leaves the prover.
 
@@ -32,10 +32,10 @@ Compiles the circuit and runs a development Groth16 trusted setup, writing
 mkdir -p build
 circom circuits/ageProof.circom -l node_modules --wasm --r1cs --sym -o build/
 snarkjs powersoftau new bn128 12 build/pot_0.ptau
-snarkjs powersoftau contribute build/pot_0.ptau build/pot_1.ptau --name="liberproof dev"
+snarkjs powersoftau contribute build/pot_0.ptau build/pot_1.ptau --name="sovegent dev"
 snarkjs powersoftau prepare phase2 build/pot_1.ptau build/pot_final.ptau
 snarkjs groth16 setup build/ageProof.r1cs build/pot_final.ptau build/age_0.zkey
-snarkjs zkey contribute build/age_0.zkey artifacts/ageProof.zkey --name="liberproof v1"
+snarkjs zkey contribute build/age_0.zkey artifacts/ageProof.zkey --name="sovegent v1"
 snarkjs zkey export verificationkey artifacts/ageProof.zkey artifacts/ageProof.vkey.json
 cp build/ageProof_js/ageProof.wasm artifacts/ageProof.wasm
 ```
@@ -43,7 +43,7 @@ cp build/ageProof_js/ageProof.wasm artifacts/ageProof.wasm
 ## Generate & verify a proof
 
 ```ts
-import { generateProof, verifyProof } from "@liberproof/zk";
+import { generateProof, verifyProof } from "@sovegent/zk";
 
 const proof = await generateProof({
   witness: { age: 25, minAge: 18 },   // age is private — never leaves the prover

@@ -1,15 +1,15 @@
 /**
- * Cardano Anchor Adapter — LiberProof
+ * Cardano Anchor Adapter — Sovegent Identity
  * Anchors a proof hash in Cardano tx metadata (label 1644):
  *   { "1644": { "liberproof": { "v": 1, "proof_hash": "<sha256hex>" } } }
  * Anchoring: pure-TS tx build (@stricahq/typhonjs) + Koios /address_utxos + /submittx
- *   (the stack proven in LiberVault). networkId 0 = preprod, 1 = mainnet.
+ *   (the stack proven in Sovegent Wallet). networkId 0 = preprod, 1 = mainnet.
  * Verification: keyless — reads metadata back from Koios /tx_metadata and matches.
  * Peer deps for anchor(): @stricahq/typhonjs, @stricahq/bip32ed25519, bignumber.js.
  */
 import { Buffer } from "buffer";
 import type { AnchorAdapter } from "./types.js";
-import type { ChainAnchor } from "@liberproof/core";
+import type { ChainAnchor } from "@sovegent/core";
 
 export const METADATA_LABEL = 1644;
 const KOIOS_MAINNET = "https://api.koios.rest/api/v1";

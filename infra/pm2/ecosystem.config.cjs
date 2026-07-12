@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
-    name: "liberproof-api",
-    cwd: "/var/www/liberproof/api",
+    name: "sovegent-identity-api",
+    cwd: "/var/www/sovegent-identity/api",
     script: "dist/index.js",
     interpreter: "node",
     instances: 1,
@@ -9,8 +9,8 @@ module.exports = {
     watch: false,
     max_memory_restart: "256M",
     env: { NODE_ENV: "production", PORT: 3000, HOST: "127.0.0.1" },
-    env_file: "/var/www/liberproof/api/.env",
-    error_file: "/var/log/pm2/liberproof-api-error.log",
-    out_file: "/var/log/pm2/liberproof-api-out.log",
+    env_file: "/var/www/sovegent-identity/api/.env",
+    error_file: "/var/log/pm2/sovegent-identity-api-error.log",
+    out_file: "/var/log/pm2/sovegent-identity-api-out.log",
   }],
 };

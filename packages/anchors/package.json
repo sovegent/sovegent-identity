@@ -1,5 +1,5 @@
 {
-  "name": "@liberproof/anchors",
+  "name": "@sovegent/anchors",
   "version": "0.1.0",
   "description": "Chain-specific anchoring adapters (EVM, Liberland, Bitcoin)",
   "license": "AGPL-3.0-or-later",
@@ -19,7 +19,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@liberproof/core": "workspace:*"
+    "@sovegent/core": "workspace:*"
   },
   "peerDependencies": {
     "viem": "^2.0.0",

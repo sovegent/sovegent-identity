@@ -7,7 +7,7 @@ let _db: Database.Database | null = null;
 
 export function getDb(): Database.Database {
   if (_db) return _db;
-  const dbPath = process.env["DB_PATH"] ?? "./data/liberproof.db";
+  const dbPath = process.env["DB_PATH"] ?? "./data/sovegent-identity.db";
   mkdirSync(dirname(dbPath), { recursive: true });
   _db = new Database(dbPath);
   _db.exec(SCHEMA);

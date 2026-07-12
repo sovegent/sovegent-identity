@@ -3,9 +3,9 @@
  *
  * Run: npx tsx examples/attest.ts
  */
-import { LiberProof } from "@liberproof/sdk";
+import { SovegentIdentity } from "@sovegent/sdk";
 
-const issuer = new LiberProof({
+const issuer = new SovegentIdentity({
   signer: {
     privateKey: process.env.ISSUER_PRIVATE_KEY ?? "",
     algorithm: "secp256k1",

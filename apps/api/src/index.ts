@@ -29,7 +29,7 @@ app.use("*", rateLimit(300, 60_000));
 
 // ── Health ────────────────────────────────────────────────────────────────────
 app.get("/health", (c) =>
-  c.json({ status: "ok", service: "liberproof-api", version: "0.1.0" })
+  c.json({ status: "ok", service: "sovegent-identity-api", version: "0.1.0" })
 );
 
 // ── Auth — stricter limit (20 attempts/min to prevent brute force) ───────────
@@ -54,5 +54,5 @@ app.onError((err, c) => {
 const port = parseInt(process.env["PORT"] ?? "3000");
 const host = process.env["HOST"] ?? "0.0.0.0";
 
-console.log(`🔐 LiberProof API running on http://${host}:${port}`);
+console.log(`🔐 Sovegent Identity API running on http://${host}:${port}`);
 serve({ fetch: app.fetch, port, hostname: host });

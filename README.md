@@ -1,37 +1,37 @@
 <p align="center">
-  <img src="docs/logo.svg" alt="LiberProof" width="120" />
+  <img src="docs/logo.svg" alt="Sovegent Identity" width="120" />
 </p>
 
-<h1 align="center">LiberProof</h1>
+<h1 align="center">Sovegent Identity</h1>
 
 <p align="center">
-  <strong>Identity & Verification SDK for the LiberLayer ecosystem</strong><br/>
+  <strong>Identity & Verification SDK for the Sovegent ecosystem</strong><br/>
   Prove claims without exposing data. Sign, timestamp, and verify everything.
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-blue.svg" alt="AGPL v3" /></a>
-  <a href="https://github.com/liberlayer/liberproof"><img src="https://img.shields.io/badge/part%20of-LiberLayer-purple.svg" alt="LiberLayer" /></a>
+  <a href="https://github.com/sovegent/sovegent-identity"><img src="https://img.shields.io/badge/part%20of-Sovegent-purple.svg" alt="Sovegent" /></a>
   <img src="https://img.shields.io/badge/status-alpha-orange.svg" alt="Alpha" />
 </p>
 
 ---
 
-## What is LiberProof?
+## What is Sovegent Identity?
 
-LiberProof is the **identity and verification layer** of the LiberLayer ecosystem.
+Sovegent Identity is the **identity and verification layer** of the Sovegent ecosystem.
 
 It allows users, agents, and systems to **prove claims without exposing sensitive data**. Using wallet signatures, cryptographic proofs, and zero-knowledge methods, it enables proving identity, ownership, eligibility, and credentials in a privacy-preserving way — with no central authority required.
 
 Everything is validated through **verifiable proof**.
 
-### The LiberLayer Ecosystem
+### The Sovegent Ecosystem
 
 | Product | Role |
 |---|---|
-| **LiberLayer** | Infrastructure & execution layer |
-| **LiberVault** | Non-custodial multi-chain wallet (key ownership) |
-| **LiberProof** | Identity, attestations & verification (you are here) |
+| **Sovegent** | Infrastructure & execution layer |
+| **Sovegent Wallet** | Non-custodial multi-chain wallet (key ownership) |
+| **Sovegent Identity** | Identity, attestations & verification (you are here) |
 
 ---
 
@@ -41,7 +41,7 @@ Everything is validated through **verifiable proof**.
 - **Signed Attestations** — issue W3C-aligned verifiable claims about any subject
 - **Zero-Knowledge Proofs** — prove attributes (age, eligibility) without revealing the raw value
 - **Chain-Agnostic** — works offline; optionally anchor proofs on EVM, Liberland, or Bitcoin
-- **Wallet-Agnostic** — works with LiberVault but not coupled to it; bring any secp256k1 or Ed25519 key
+- **Wallet-Agnostic** — works with Sovegent Wallet but not coupled to it; bring any secp256k1 or Ed25519 key
 - **Noble Crypto** — uses `@noble/hashes` and `@noble/curves` throughout (audited, zero dependencies)
 
 ---
@@ -49,12 +49,12 @@ Everything is validated through **verifiable proof**.
 ## Packages
 
 ```
-liberproof/
+sovegent-identity/
 ├── packages/
-│   ├── core/        @liberproof/core     — hashing, signing, types, attestations, notarization
-│   ├── zk/          @liberproof/zk       — zero-knowledge proof generation and verification
-│   ├── anchors/     @liberproof/anchors  — pluggable chain anchoring (EVM, Liberland)
-│   └── sdk/         @liberproof/sdk      — unified consumer API (imports all of the above)
+│   ├── core/        @sovegent/core     — hashing, signing, types, attestations, notarization
+│   ├── zk/          @sovegent/zk       — zero-knowledge proof generation and verification
+│   ├── anchors/     @sovegent/anchors  — pluggable chain anchoring (EVM, Liberland)
+│   └── sdk/         @sovegent/sdk      — unified consumer API (imports all of the above)
 ├── circuits/                             — circom ZK circuits
 ├── docs/                                 — setup guides and architecture docs
 └── examples/                             — runnable usage examples
@@ -65,15 +65,15 @@ liberproof/
 ## Quick Start
 
 ```bash
-pnpm add @liberproof/sdk
+pnpm add @sovegent/sdk
 ```
 
 ### Notarize a document
 
 ```ts
-import { LiberProof } from "@liberproof/sdk";
+import { SovegentIdentity } from "@sovegent/sdk";
 
-const lp = new LiberProof({
+const lp = new SovegentIdentity({
   signer: {
     privateKey: "0xabc...",
     algorithm: "secp256k1",
@@ -108,7 +108,7 @@ console.log(result.valid); // true
 ### Anchor on-chain (optional)
 
 ```ts
-import { EvmAnchorAdapter } from "@liberproof/anchors";
+import { EvmAnchorAdapter } from "@sovegent/anchors";
 
 const adapter = new EvmAnchorAdapter({ publicClient, walletClient, chainName: "ethereum" });
 const anchored = await lp.anchor(record, adapter);
@@ -136,12 +136,12 @@ See [docs/zk/setup.md](docs/zk/setup.md) for circuit compilation and proof gener
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   @liberproof/sdk                   │
+│                   @sovegent/sdk                   │
 │              (unified consumer API)                 │
 └──────────────┬─────────────────┬───────────────────┘
                │                 │
     ┌──────────▼───────┐ ┌───────▼──────────┐
-    │ @liberproof/core │ │  @liberproof/zk   │
+    │ @sovegent/core │ │  @sovegent/zk   │
     │ hashing, signing │ │  ZK proof gen/ver │
     │ attestations     │ │  circom circuits  │
     │ notarization     │ └──────────────────┘
@@ -149,7 +149,7 @@ See [docs/zk/setup.md](docs/zk/setup.md) for circuit compilation and proof gener
     └──────────┬───────┘
                │
     ┌──────────▼──────────────────────────┐
-    │         @liberproof/anchors         │
+    │         @sovegent/anchors         │
     │  EVM adapter │ Liberland adapter    │
     └─────────────────────────────────────┘
 ```
@@ -159,28 +159,28 @@ See [docs/zk/setup.md](docs/zk/setup.md) for circuit compilation and proof gener
 ## Design Principles
 
 - **Offline-first** — all proofs work without a network call
-- **Verifier-independent** — no LiberProof server needed to verify
+- **Verifier-independent** — no Sovegent Identity server needed to verify
 - **W3C aligned** — compatible with the Verifiable Credentials Data Model
-- **Noble crypto** — same audited primitives as LiberVault
+- **Noble crypto** — same audited primitives as Sovegent Wallet
 
 ---
 
 ## License
 
-**AGPL v3** — if you run a modified version of LiberProof as a service,
+**AGPL v3** — if you run a modified version of Sovegent Identity as a service,
 you must publish the source. See [LICENSE](LICENSE).
 
-Part of the [LiberLayer](https://github.com/liberlayer) ecosystem.
+Part of the [Sovegent](https://github.com/sovegent) ecosystem.
 
 ---
 
 ## Contributing
 
-LiberProof is in alpha. Issues, circuit contributions, and anchor adapters welcome.
+Sovegent Identity is in alpha. Issues, circuit contributions, and anchor adapters welcome.
 
 ```bash
-git clone https://github.com/liberlayer/liberproof.git
-cd liberproof
+git clone https://github.com/sovegent/sovegent-identity.git
+cd sovegent-identity
 pnpm install
 pnpm build
 pnpm test

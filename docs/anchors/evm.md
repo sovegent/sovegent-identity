@@ -7,7 +7,7 @@ though a `ProofRegistry.sol` contract is planned for queryable on-chain lookups.
 ## Setup
 
 ```bash
-pnpm add viem @liberproof/anchors
+pnpm add viem @sovegent/anchors
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ pnpm add viem @liberproof/anchors
 ```ts
 import { createPublicClient, createWalletClient, http } from "viem";
 import { mainnet } from "viem/chains";
-import { EvmAnchorAdapter } from "@liberproof/anchors";
+import { EvmAnchorAdapter } from "@sovegent/anchors";
 
 const adapter = new EvmAnchorAdapter({
   publicClient: createPublicClient({ chain: mainnet, transport: http() }),
@@ -29,6 +29,6 @@ const anchor = await adapter.anchor(record.proof.payloadHash);
 ## How it works
 
 The proof hash (32 bytes / 64 hex chars) is prefixed with `0x6c7066:` (UTF-8
-for `lpf:` — LiberProof fingerprint) and written as transaction `data`.
+for `lpf:` — Sovegent Identity fingerprint) and written as transaction `data`.
 This costs ~4 gas per zero byte, ~16 gas per non-zero byte — typically
 under 10,000 gas total for a 32-byte hash.

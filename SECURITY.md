@@ -10,7 +10,7 @@
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-Email **security@liberlayer.com** with:
+Email **security@sovegent.com** with:
 - A description of the vulnerability
 - Steps to reproduce
 - Potential impact
@@ -21,11 +21,11 @@ You will receive a response within 48 hours. We will work with you to understand
 ## Scope
 
 ### In scope
-- Cryptographic signing and verification (`@liberproof/core`)
+- Cryptographic signing and verification (`@sovegent/core`)
 - Authentication bypass in the API (SIWE flow, JWT handling)
 - Authorization issues (accessing other users' proofs)
 - Injection vulnerabilities in the API
-- ZK circuit soundness issues (`@liberproof/zk`)
+- ZK circuit soundness issues (`@sovegent/zk`)
 
 ### Out of scope
 - Issues in third-party dependencies (report to their maintainers)
@@ -34,7 +34,7 @@ You will receive a response within 48 hours. We will work with you to understand
 
 ## Cryptographic Assumptions
 
-LiberProof uses the [Noble cryptography](https://paulmillr.com/noble/) library family (`@noble/hashes`, `@noble/curves`) for all signing and hashing operations. These libraries are audited and well-reviewed. Any implementation issues wrapping these primitives are in scope.
+Sovegent Identity uses the [Noble cryptography](https://paulmillr.com/noble/) library family (`@noble/hashes`, `@noble/curves`) for all signing and hashing operations. These libraries are audited and well-reviewed. Any implementation issues wrapping these primitives are in scope.
 
 ## Disclosure Policy
 

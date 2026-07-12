@@ -19,9 +19,9 @@ jobs:
           node-version: "22"
           cache: "pnpm"
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm --filter @liberproof/core run build
-      - run: pnpm --filter @liberproof/anchors --filter @liberproof/zk run build
-      - run: pnpm --filter @liberproof/sdk run build
+      - run: pnpm --filter @sovegent/core run build
+      - run: pnpm --filter @sovegent/anchors --filter @sovegent/zk run build
+      - run: pnpm --filter @sovegent/sdk run build
       - run: pnpm -r run typecheck
 
   test:
@@ -36,7 +36,7 @@ jobs:
           node-version: "22"
           cache: "pnpm"
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm --filter @liberproof/core run test -- --reporter=verbose
+      - run: pnpm --filter @sovegent/core run test -- --reporter=verbose
 
   build:
     name: Build
@@ -73,6 +73,6 @@ jobs:
           context: .
           file: infra/docker/Dockerfile.api
           push: false
-          tags: liberproof/api:latest
+          tags: sovegent/api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max

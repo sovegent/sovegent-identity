@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "https://api.liberproof.com";
+const API_URL = import.meta.env.VITE_API_URL ?? "https://api.identity.sovegent.com";
 
 type ProofType = "notarization" | "attestation";
 
@@ -49,7 +49,7 @@ export function App() {
       }
       setResult(await res.json() as VerifyResult);
     } catch {
-      setError("Could not reach verification server. You can verify this proof offline using the LiberProof SDK.");
+      setError("Could not reach verification server. You can verify this proof offline using the Sovegent Identity SDK.");
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,7 @@ export function App() {
       <header style={styles.header}>
         <div style={styles.logo}>
           <span style={styles.logoMark}>⬡</span>
-          <span style={styles.logoText}>LiberProof</span>
+          <span style={styles.logoText}>Sovegent Identity</span>
           <span style={styles.logoBadge}>VERIFY</span>
         </div>
         <p style={styles.tagline}>Cryptographic proof verification — no account required</p>
@@ -94,17 +94,17 @@ export function App() {
         {!proofId && !result && (
           <div style={styles.hint}>
             <p>Or navigate directly to:</p>
-            <code style={styles.code}>verify.liberproof.com/p/YOUR_PROOF_ID</code>
+            <code style={styles.code}>verify.identity.sovegent.com/p/YOUR_PROOF_ID</code>
           </div>
         )}
       </main>
 
       <footer style={styles.footer}>
-        <a href="https://liberproof.com" style={styles.footerLink}>liberproof.com</a>
+        <a href="https://identity.sovegent.com" style={styles.footerLink}>identity.sovegent.com</a>
         <span style={styles.muted}>·</span>
-        <a href="https://github.com/liberlayer/liberproof" style={styles.footerLink}>GitHub</a>
+        <a href="https://github.com/sovegent/sovegent-identity" style={styles.footerLink}>GitHub</a>
         <span style={styles.muted}>·</span>
-        <span style={styles.muted}>Part of the LiberLayer ecosystem</span>
+        <span style={styles.muted}>Part of the Sovegent ecosystem</span>
       </footer>
     </div>
   );

@@ -1,10 +1,10 @@
 /**
- * LiberProof — unified SDK entry point
+ * Sovegent Identity — unified SDK entry point
  *
  * Usage:
- *   import { LiberProof } from "@liberproof/sdk";
+ *   import { SovegentIdentity } from "@sovegent/sdk";
  *
- *   const lp = new LiberProof({
+ *   const lp = new SovegentIdentity({
  *     signer: {
  *       privateKey: "0xabc...",
  *       algorithm: "secp256k1",
@@ -36,17 +36,17 @@ import {
   type NotarizationRecord,
   type Attestation,
   type VerificationResult,
-} from "@liberproof/core";
-import type { AnchorAdapter } from "@liberproof/anchors";
+} from "@sovegent/core";
+import type { AnchorAdapter } from "@sovegent/anchors";
 
-export interface LiberProofConfig {
+export interface SovegentIdentityConfig {
   signer: SignerConfig;
 }
 
-export class LiberProof {
+export class SovegentIdentity {
   private signer: SignerConfig;
 
-  constructor(config: LiberProofConfig) {
+  constructor(config: SovegentIdentityConfig) {
     this.signer = config.signer;
   }
 

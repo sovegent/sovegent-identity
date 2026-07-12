@@ -1,6 +1,6 @@
-# @liberproof/anchors
+# @sovegent/anchors
 
-Pluggable chain anchoring adapters for LiberProof. Submit proof hashes on-chain for immutable timestamping.
+Pluggable chain anchoring adapters for Sovegent Identity. Submit proof hashes on-chain for immutable timestamping.
 
 ## Adapters
 
@@ -13,16 +13,16 @@ Pluggable chain anchoring adapters for LiberProof. Submit proof hashes on-chain 
 
 ```bash
 # For EVM anchoring
-pnpm add @liberproof/anchors viem
+pnpm add @sovegent/anchors viem
 
 # For Liberland anchoring
-pnpm add @liberproof/anchors @polkadot/api @polkadot/keyring
+pnpm add @sovegent/anchors @polkadot/api @polkadot/keyring
 ```
 
 ## Usage
 
 ```ts
-import { EvmAnchorAdapter } from "@liberproof/anchors";
+import { EvmAnchorAdapter } from "@sovegent/anchors";
 import { createPublicClient, createWalletClient, http } from "viem";
 import { mainnet } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";

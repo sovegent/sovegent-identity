@@ -29,7 +29,7 @@ describe("POST /auth/nonce", () => {
     expect(status).toBe(200);
     expect(typeof body["nonce"]).toBe("string");
     expect((body["nonce"] as string).length).toBe(32); // 16 bytes hex
-    expect(body["message"]).toContain("LiberProof");
+    expect(body["message"]).toContain("Sovegent Identity");
     expect(body["message"]).toContain(body["nonce"]);
   });
 

@@ -1,6 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL ?? "https://api.liberproof.com";
+const API_URL = import.meta.env.VITE_API_URL ?? "https://api.identity.sovegent.com";
 
-function getToken(): string | null { return localStorage.getItem("liberproof_token"); }
+function getToken(): string | null { return localStorage.getItem("sovegent_token"); }
 function authHeaders(): HeadersInit {
   const t = getToken();
   return t ? { Authorization: `Bearer ${t}` } : {};
