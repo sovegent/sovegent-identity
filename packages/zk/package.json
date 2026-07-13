@@ -1,0 +1,40 @@
+{
+  "name": "@sovegent/zk",
+  "version": "0.1.0",
+  "description": "Zero-knowledge proof primitives for Sovegent Identity",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist build artifacts",
+    "build:circuit": "bash scripts/build.sh",
+    "pretest": "test -f artifacts/ageProof.zkey -a -f artifacts/rangeProof.zkey || npm run build:circuit"
+  },
+  "dependencies": {
+    "@sovegent/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "snarkjs": "^0.7.0"
+  },
+  "peerDependenciesMeta": {
+    "snarkjs": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0",
+    "circomlib": "^2.0.5",
+    "@types/node": "^20.0.0"
+  }
+}

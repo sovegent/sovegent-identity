@@ -1,0 +1,32 @@
+FROM node:22-alpine AS builder
+WORKDIR /app
+# Toolchain for native modules (better-sqlite3 compiles from source on Alpine/musl —
+# no musl prebuilds — so python3/make/g++ are required at install time).
+RUN apk add --no-cache python3 make g++
+# Pin pnpm: pnpm 11 ignores the onlyBuiltDependencies allowlist (so the better-sqlite3
+# build is skipped and install fails); 10.15.0 honours it. Pinning also keeps the
+# image reproducible vs the moving `@latest`.
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
+COPY pnpm-workspace.yaml package.json tsconfig.json pnpm-lock.yaml* ./
+COPY packages/core/package.json ./packages/core/
+COPY packages/anchors/package.json ./packages/anchors/
+COPY packages/zk/package.json ./packages/zk/
+COPY packages/sdk/package.json ./packages/sdk/
+COPY apps/api/package.json ./apps/api/
+RUN pnpm install --no-frozen-lockfile
+COPY packages/ ./packages/
+COPY apps/api/ ./apps/api/
+RUN pnpm --filter @sovegent/core run build
+RUN pnpm --filter @sovegent/anchors --filter @sovegent/zk run build
+RUN pnpm --filter @sovegent/sdk run build
+RUN pnpm --filter @sovegent/api run build
+
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/apps/api/dist ./dist
+COPY --from=builder /app/apps/api/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+RUN mkdir -p /app/data
+EXPOSE 3000
+CMD ["node", "dist/index.js"]

@@ -1,0 +1,18 @@
+<svg viewBox="0 0 192 252" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sovegent">
+  <defs>
+    <radialGradient id="dot" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#ccd3de"/>
+      <stop offset="1" stop-color="#8b95a5"/>
+    </radialGradient>
+  </defs>
+  <g fill="url(#dot)">
+    <circle cx="62" cy="24" r="13"/><circle cx="96" cy="24" r="13"/><circle cx="130" cy="24" r="13"/><circle cx="164" cy="24" r="13"/>
+    <circle cx="28" cy="58" r="13"/><circle cx="62" cy="58" r="13"/>
+    <circle cx="28" cy="92" r="13"/>
+    <circle cx="62" cy="126" r="13"/><circle cx="96" cy="126" r="13"/><circle cx="130" cy="126" r="13"/>
+    <circle cx="130" cy="160" r="13"/><circle cx="164" cy="160" r="13"/>
+    <circle cx="164" cy="194" r="13"/>
+    <circle cx="28" cy="228" r="13"/><circle cx="62" cy="228" r="13"/><circle cx="96" cy="228" r="13"/><circle cx="130" cy="228" r="13"/>
+  </g>
+</svg>

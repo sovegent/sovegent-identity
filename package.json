@@ -1,0 +1,42 @@
+{
+  "name": "sovegent-identity",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sovegent Identity — Identity & Verification SDK for the Sovegent ecosystem",
+  "license": "AGPL-3.0-or-later",
+  "author": "Sovegent <hello@sovegent.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sovegent/sovegent-identity.git"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "typecheck": "pnpm -r run typecheck",
+    "clean": "pnpm -r run clean && rm -rf node_modules",
+    "dev:api": "pnpm --filter @sovegent/api dev",
+    "dev:verify": "pnpm --filter @sovegent/verify dev",
+    "dev:app": "pnpm --filter @sovegent/app dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "eslint": "^8.57.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  }
+}
