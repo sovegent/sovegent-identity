@@ -24,7 +24,7 @@
     "@sovegent/zk": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
+    "typescript": "^7.0.2",
     "vitest": "^1.6.0"
   }
 }
