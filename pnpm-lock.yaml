@@ -28,25 +28,25 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.12.0
-        version: 1.19.11(hono@4.12.25)
+        version: 1.19.11(hono@4.12.27)
       '@hono/zod-validator':
         specifier: ^0.2.0
-        version: 0.2.2(hono@4.12.25)(zod@3.25.76)
+        version: 0.2.2(hono@4.12.27)(zod@3.25.76)
+      '@noble/hashes':
+        specifier: ^1.4.0
+        version: 1.8.0
       '@sovegent/anchors':
         specifier: workspace:*
         version: link:../../packages/anchors
       '@sovegent/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@noble/hashes':
-        specifier: ^1.4.0
-        version: 1.8.0
       better-sqlite3:
         specifier: ^9.4.3
         version: 9.6.0
       hono:
-        specifier: ^4.12.25
-        version: 4.12.25
+        specifier: ^4.12.27
+        version: 4.12.27
       jose:
         specifier: ^5.4.0
         version: 5.10.0
@@ -106,6 +106,12 @@ importers:
 
   apps/cli:
     dependencies:
+      '@noble/curves':
+        specifier: ^1.4.0
+        version: 1.9.7
+      '@noble/hashes':
+        specifier: ^1.4.0
+        version: 1.8.0
       '@sovegent/anchors':
         specifier: workspace:*
         version: link:../../packages/anchors
@@ -118,12 +124,6 @@ importers:
       '@sovegent/zk':
         specifier: workspace:*
         version: link:../../packages/zk
-      '@noble/curves':
-        specifier: ^1.4.0
-        version: 1.9.7
-      '@noble/hashes':
-        specifier: ^1.4.0
-        version: 1.8.0
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
@@ -1520,8 +1520,8 @@ packages:
   hmac-drbg@1.0.1:
     resolution: {integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==}
 
-  hono@4.12.25:
-    resolution: {integrity: sha512-2NFaIyNVgJmBs/ecmtGzlmluTFs5cHEWGTdu0t1HBwYzoGXOL5nUQBRMXsXWla5i4KkG//QMzVP88m1+I3fdAQ==}
+  hono@4.12.27:
+    resolution: {integrity: sha512-1yrb/+w6HWQJrUCLkJ2IF5jNIPvvFkblV5RNOYl6bV+OA6p9GLcMpHFFGTosSvHvcAUibuUukRqhlYI4z32C7Q==}
     engines: {node: '>=16.9.0'}
 
   hoopy@0.1.4:
@@ -2525,13 +2525,13 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
-  '@hono/node-server@1.19.11(hono@4.12.25)':
+  '@hono/node-server@1.19.11(hono@4.12.27)':
     dependencies:
-      hono: 4.12.25
+      hono: 4.12.27
 
-  '@hono/zod-validator@0.2.2(hono@4.12.25)(zod@3.25.76)':
+  '@hono/zod-validator@0.2.2(hono@4.12.27)(zod@3.25.76)':
     dependencies:
-      hono: 4.12.25
+      hono: 4.12.27
       zod: 3.25.76
 
   '@humanwhocodes/config-array@0.13.0':
@@ -3502,7 +3502,7 @@ snapshots:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
-  hono@4.12.25: {}
+  hono@4.12.27: {}
 
   hoopy@0.1.4: {}
 
